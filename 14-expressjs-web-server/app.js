@@ -1,53 +1,56 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const app = express();
 
-const port = 3000
+const port = 3000;
 
 //EJS
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
+app.use(expressLayouts);
 
-
-app.get('/', (req,res)=>{
+app.get("/", (req, res) => {
   const politisi = [
     {
-      nama: 'Jokowi',
-      partai: 'PDIP'
+      nama: "Jokowi",
+      partai: "PDIP",
     },
     {
-      nama: 'Anies',
-      partai: 'Non Partai'
+      nama: "Anies",
+      partai: "Non Partai",
     },
     {
-      nama: 'Bamsoet',
-      partai: 'Golkar'
+      nama: "Bamsoet",
+      partai: "Golkar",
     },
     {
-      nama: 'Syahroni',
-      partai: 'Nasdem'
+      nama: "Syahroni",
+      partai: "Nasdem",
     },
     {
-      nama: 'Imin',
-      partai: 'PKB'
+      nama: "Imin",
+      partai: "PKB",
     },
-  ]
+  ];
 
+  res.render("index", { nama: "Sadhika", title: "Home", politisi: politisi, layout: 'layouts/main'});
+});
 
-  res.render('index',{ nama: 'Sadhika', title: 'Home', politisi: politisi})
-})
+app.get("/about", (req, res) => {
+  res.render("about", { title: "About", layout: "layouts/main" });
+});
 
-app.get('/about', (req,res)=>{
-  res.render('about')
-})
+app.get("/contact", (req, res) => {
+  res.render("contact", {
+    title: "Contact",
+    layout: "layouts/main",
+  });
+});
 
-app.get('/contact', (req,res)=>{
-  res.render('contact')
-})
+app.use("/", (req, res) => {
+  res.status(404);
+  res.render("else", { title: "404", layout: "layouts/main" });
+});
 
-app.use('/', (req,res)=>{
-  res.status(404)
-  res.render('else')
-})
-
-app.listen(port, ()=>{
-  console.log(`App listening at http://localhost/${port}`)
-})
+app.listen(port, () => {
+  console.log(`App listening at http://localhost/${port}`);
+});
