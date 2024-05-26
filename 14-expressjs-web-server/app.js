@@ -8,7 +8,19 @@ const port = 3000;
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 
-app.get("/", (req, res) => {
+//Build in Middleware
+app.use(express.static('public'))
+
+//App Level Middleware
+app.use((req,res,next)=>{
+  console.log('Time: ', Date.now());
+  next()
+})
+
+//Third Party Middleware
+
+
+app.get("/", (req, res) => { 
   const politisi = [
     {
       nama: "Jokowi",
