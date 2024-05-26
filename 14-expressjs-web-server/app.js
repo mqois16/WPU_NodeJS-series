@@ -1,12 +1,16 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const morgan = require("morgan");
 const app = express();
 
 const port = 3000;
 
 //EJS
 app.set("view engine", "ejs");
+
+//Third Party Middleware
 app.use(expressLayouts);
+app.use(morgan('dev'))
 
 //Build in Middleware
 app.use(express.static('public'))
@@ -17,7 +21,6 @@ app.use((req,res,next)=>{
   next()
 })
 
-//Third Party Middleware
 
 
 app.get("/", (req, res) => { 
