@@ -1,0 +1,15 @@
+
+    <h1>Ini Halaman Utama!</h1>
+    
+    <h2>Halo <%= nama %></h2>
+    <hr>
+    <h4>Daftar Tokoh Politik</h4>
+<% if (politisi.length===0) { %>
+ Data Kosong
+<% } %>
+    <% politisi.forEach(pol => { %>
+     <ul>
+        <li>Nama : <%= pol.nama %> </li>
+        <li>Asal Partai : <%= pol.partai %> </li>
+      </ul>
+    <% }) %>
