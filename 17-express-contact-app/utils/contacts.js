@@ -32,7 +32,21 @@ const find_contact = (nama) => {
   return kontaknya;
 };
 
+//menimpa data dengan yang terbaru
+const saveContacts = (contacts) => {
+    fs.writeFileSync('data/kontak.json', JSON.stringify(contacts))
+}
+
+//tambah kontak baru
+const add_contact = (contact) => {
+    const contacts = load_contact()
+    contacts.push(contact)
+    saveContacts(contact)
+}
+
+
 module.exports = {
   load_contact,
-  find_contact
+  find_contact,
+  add_contact
 };
