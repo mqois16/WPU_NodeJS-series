@@ -2,10 +2,24 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const {load_contact, find_contact, add_contact, cekDuplikat} = require('./utils/contacts')
 const {check,body, validationResult} = require('express-validator')
-
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
+const flash = require('connect-flash')
 
 const app = express();
 const port = 3000;
+
+//configurasi flash
+app.use(cookieParser('secret'))
+app.use(session({
+  cookie : {maxAge:6000},
+  secret : 'secret',
+  resave : true,
+  saveUninitialized : true
+}));
+
+app.use(flash())
+
 
 //EJS
 app.set("view engine", "ejs");
@@ -55,7 +69,8 @@ app.get("/contact", (req, res) => {
   res.render("contact", {
     title: "Contact",
     layout: "layouts/main",
-    contacts
+    contacts,
+    msg:req.flash('msg')
   });
 });
 
@@ -89,9 +104,11 @@ check('no', 'Nomor telepon tidak valid!').isMobilePhone('id-ID'),
       layout: 'layouts/main',
       errors: errors.array(),
     })
+  } else {
+    add_contact(req.body)
+    req.flash('msg', 'Data kontak berhasil disimpan!')
+    res.redirect('/contact')
   }
-  // add_contact(req.body)
-  // res.redirect('/contact')
 })
 
 
