@@ -41,12 +41,19 @@ const saveContacts = (contacts) => {
 const add_contact = (contact) => {
     const contacts = load_contact()
     contacts.push(contact)
-    saveContacts(contact)
+    saveContacts(contacts)
+}
+
+//cek nama duplikat
+const cekDuplikat = (nama) =>{
+    const contacts = load_contact()
+    return contacts.find((contact) => contact.nama === nama)
 }
 
 
 module.exports = {
   load_contact,
   find_contact,
-  add_contact
+  add_contact,
+  cekDuplikat
 };
