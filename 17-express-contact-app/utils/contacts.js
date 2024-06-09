@@ -58,11 +58,23 @@ const delete_contact = (nama) => {
     saveContacts(filteredContacts)
 }
 
+//mengubah data contact
+const update_contact = (kontakBaru) => {
+    const contacts = load_contact()
+    //hilangkan kontak lama yang namanya == oldNama
+    const filteredContacts = contacts.filter((contact)=>contact.nama !== kontakBaru.oldNama)
+    delete kontakBaru.oldNama
+    filteredContacts.push(kontakBaru)
+    saveContacts(filteredContacts)
+}
+
+
 
 module.exports = {
   load_contact,
   find_contact,
   add_contact,
   cekDuplikat,
-  delete_contact
+  delete_contact,
+  update_contact
 };
