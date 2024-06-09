@@ -50,10 +50,19 @@ const cekDuplikat = (nama) =>{
     return contacts.find((contact) => contact.nama === nama)
 }
 
+//hapus contact
+const delete_contact = (nama) => {
+    const contacts = load_contact()
+    const filteredContacts = contacts.filter((contact)=>contact.nama !== nama)
+    //simpan
+    saveContacts(filteredContacts)
+}
+
 
 module.exports = {
   load_contact,
   find_contact,
   add_contact,
-  cekDuplikat
+  cekDuplikat,
+  delete_contact
 };

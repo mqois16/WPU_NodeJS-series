@@ -1,6 +1,6 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const {load_contact, find_contact, add_contact, cekDuplikat} = require('./utils/contacts')
+const {load_contact, find_contact, add_contact, cekDuplikat, delete_contact} = require('./utils/contacts')
 const {check,body, validationResult} = require('express-validator')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -111,6 +111,22 @@ check('no', 'Nomor telepon tidak valid!').isMobilePhone('id-ID'),
   }
 })
 
+
+//proses delete contact
+app.get("/contact/delete/:nama", (req,res)=>{
+  const contact = find_contact(req.params.nama);
+
+  //jika kontak tidak ada
+  if(!contact){
+    res.status(404)
+    res.send('<h1>404</h1>')
+  }else{
+    delete_contact(req.params.nama)
+    req.flash('msg', 'Data kontak berhasil dihapus!')
+    res.redirect('/contact')
+  }
+
+})
 
 //halaman detail data kontak
 
